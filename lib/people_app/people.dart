@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oydadb/oydadb.dart';
-import 'package:oydadb/src/oyda_interface.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:validators/validators.dart';
-
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await dotenv.load(fileName: '.env');
-//   runApp(const PeopleApp());
-// }
 
 class PeopleApp extends StatelessWidget {
   const PeopleApp({super.key});
@@ -43,8 +35,7 @@ class _PeoplePageState extends State<PeoplePage> {
     return result;
   }
 
-  Future<void> _addPerson(
-      String firstname, String lastname, String role) async {
+  Future<void> _addPerson(String firstname, String lastname, String role) async {
     await OydaInterface().insertRow('people', {
       'firstname': firstname,
       'lastname': lastname,
@@ -52,8 +43,7 @@ class _PeoplePageState extends State<PeoplePage> {
     });
   }
 
-  Future<void> _updatePerson(
-      String firstname, String lastname, String role) async {
+  Future<void> _updatePerson(String firstname, String lastname, String role) async {
     await OydaInterface().updateRow('people', {
       'firstname': firstname,
       'lastname': lastname,
@@ -69,11 +59,7 @@ class _PeoplePageState extends State<PeoplePage> {
     ]);
   }
 
-  void _showPersonDialog(
-      {String? firstname,
-      String? lastname,
-      String? role,
-      bool isEdit = false}) {
+  void _showPersonDialog({String? firstname, String? lastname, String? role, bool isEdit = false}) {
     _firstnameController.text = firstname ?? '';
     _lastnameController.text = lastname ?? '';
     _roleController.text = role ?? '';
@@ -144,8 +130,7 @@ class _PeoplePageState extends State<PeoplePage> {
       ),
       body: FutureBuilder(
         future: _fetchPeople(),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -171,8 +156,7 @@ class _PeoplePageState extends State<PeoplePage> {
                   leading: CircleAvatar(
                     child: Text(firstname[0]),
                   ),
-                  title: Text(name,
-                      style: const TextStyle(fontWeight: FontWeight.bold)),
+                  title: Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
                   subtitle: Text(role),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -196,8 +180,7 @@ class _PeoplePageState extends State<PeoplePage> {
                             builder: (context) {
                               return AlertDialog(
                                 title: const Text('Delete Person'),
-                                content: const Text(
-                                    'Are you sure you want to delete this person?'),
+                                content: const Text('Are you sure you want to delete this person?'),
                                 actions: [
                                   TextButton(
                                     onPressed: () {
@@ -236,4 +219,3 @@ class _PeoplePageState extends State<PeoplePage> {
     );
   }
 }
-
